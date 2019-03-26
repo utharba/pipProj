@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/styles.css"/>
+        <script src="https://unpkg.com/vue"></script>
+    </head>
+    <div class="centeredLayout">
+        <div class="profile" id="profile">
+            <header>
+                <h1>User Profile</h1>
+            </header>
+            <div class="row">
+                <div class="control name">
+                    <label>Employee Name</label>
+                    <p>{{ fullUserName }}</p>
+                </div>
+                <div>
+                    <div class="control fullWidth">
+                        <label>Attributes</label>
+                        <div class="list">
+                            <p>Attributes listed here</p> 
+                        </div>
+                    </div>
+                    <div class="control fullWidth">
+                        <label>Top Three</label>
+                        <div class="list">
+                            <p v-for="item in topThree" >{{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="control">
+                    <label>Position</label>
+                    <ul>
+                        <li>Positions listed here</li>
+                    </ul>
+                </div>
+                <div class="control fullWidth">
+                    <label>Links</label>
+                    <div>
+                        <p><a href="#">Links listed here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var attributes = [
+            {key: "1", text: "Attribute of first kind"},
+            {key: "2", text: "Important Attribute"},
+            {key: "3", text: "Really important attribute"},
+            {key: "4", text: "Blue suede shoes"},
+            {key: "5", text: "Back dimension"},
+            {key: "6", text: "Front dimension"},
+            {key: "7", text: "Forward dimension"},
+            {key: "8", text: "Fifth dimension"},
+            {key: "9", text: "One less egg to fry"}
+        ];
+
+        var namePrefix = [
+            {key: "-1", text: ""},
+            {key: "0", text: "Mr."},
+            {key: "1", text: "Ms."},
+            {key: "2", text: "Mrs."},
+            {key: "3", text: "Dr."}
+        ];
+        
+        // this is fake data that will eventually come from a backend.
+        var data = { 
+            name: { prefix: "Mr.", first: "John", mi: "K", last: "Smith" },
+            attributes: ["1", "5", "7"],
+            links: ["http://google.com", "https://connect.cray.us.com", "http://yahoo.com"],
+            position: [ "First Position", "Position Two", "3rd Position"],
+            topThree: [ "Yadda", "Badda", "Bing"],
+            attribList: attributes
+        };
+
+        data.namePrefix = namePrefix;
+
+        //there is an error in this function. It needs to
+        //add a period after "mi" if it isn't null
+        function buildName() {
+            var arrFullName = [];
+            var props = ['prefix', 'first', 'mi', 'last'];
+            for (var i=0; i < props.length; i++) {
+                var val = data.name[props[i]];
+                if (val !== null && val.length > 0) {
+                    arrFullName.push(val);
+                }
+            }
+            data.fullUserName = arrFullName.join(" ");
+        }
+
+        buildName();
+        
+        data.editMode = false;
+
+        var vm = new Vue({
+            el: "#profile",
+            data: data,
+            methods: {               
+            }
+        });
+
+    </script>
+</html>
